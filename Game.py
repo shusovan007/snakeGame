@@ -5,7 +5,7 @@ from random import randint
 score=0
 game_running=True
 speed=0;
-# Create snake segments
+
 tim = Turtle()
 tim.penup()
 tim.shape("square")
@@ -23,21 +23,21 @@ tim2.shape("square")
 tim2.color("white")
 tim2.setpos(-40, 0)
 
-# Create food (random position within screen bounds)
+
 food = Turtle()
 food.penup()
 food.shape("circle")
 food.color("white")
-fposx = randint(-280, 280)  # Random x position within screen bounds
-fposy = randint(-280, 280)  # Random y position within screen bounds
+fposx = randint(-280, 280)  
+fposy = randint(-280, 280)  
 food.setpos(fposx, fposy)
 
-# Snake movement
+
 snakelength = [tim, tim1, tim2]
 turtlewrite=Turtle()
 
 def do():
-    # Check if the snake's head is near foo
+   
     global game_running
     global speed
     x=tim.xcor()
@@ -62,7 +62,7 @@ def do():
 
     
     global score
-    if tim.distance(food) < 15:  # Check if the snake eats the food (distance < 15)
+    if tim.distance(food) < 15:  
         newT = Turtle()
         score+=1
     
@@ -80,60 +80,60 @@ def do():
         newT.color("white")
         snakelength.append(newT)
         
-        # Move the food to a new random position
+       
         food.clear()
         fposx = randint(-280, 280)
         fposy = randint(-280, 280)
         food.setpos(fposx, fposy)
     
-    # Move the snake
+    
     tim.penup()
     pp = tim.pos()
     tim.forward(10)
     
-    # Move the rest of the snake
+
     for i in range(1, len(snakelength)):
         snakelength[i].penup()
         pos = snakelength[i].pos()
         snakelength[i].goto(pp)
         pp = pos
 
-    # Update the screen (only if necessary, for smoother animations)
+    
     screen.update()
 
-# Direction control functions
+
 def do1():
-    if tim.heading() != 180:  # Check if the snake is not already going left
-        tim.setheading(0)  # Right
+    if tim.heading() != 180:  
+        tim.setheading(0)  
 
 def do2():
-    if tim.heading() != 0:  # Check if the snake is not already going right
-        tim.setheading(180)  # Left
+    if tim.heading() != 0:  
+        tim.setheading(180)  
 
 def do3():
-    if tim.heading() != 270:  # Check if the snake is not already going down
-        tim.setheading(90)  # Up
+    if tim.heading() != 270:  
+        tim.setheading(90)  
 
 def do4():
-    if tim.heading() != 90:  # Check if the snake is not already going up
-        tim.setheading(270)  # Down
+    if tim.heading() != 90:  
+        tim.setheading(270)  
 
-# Setup screen
+
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
 screen.listen()
 
-# Disable automatic screen updates for better performance (manual update instead)
+
 screen.tracer(0)
 
-# Key press events
+
 screen.onkey(do1, "Right")
 screen.onkey(do2, "Left")
 screen.onkey(do3, "Up")
 screen.onkey(do4, "Down")
 
-# Start the snake's automatic movement
+
 def start_game():
     global game_running;
     global speed
@@ -142,16 +142,16 @@ def start_game():
     turtlewrite.color("white")
     turtlewrite.hideturtle()
     turtlewrite.goto(0,280)
-    #turtlewrite.write("Home = ", align="top")
+   
 
     turtlewrite.write(f"Score = {score}", font=("Arial", 14, "bold"), align="center")
 
-    do()  # Start moving the snake
+    do() 
     if game_running:
-        screen.ontimer(start_game, 100-speed)  # Call start_game again after 100 ms (10 times per second)
+        screen.ontimer(start_game, 100-speed)  
 
-# Start the game
+
 start_game()
 
-# Keep the window open
+
 screen.mainloop()
